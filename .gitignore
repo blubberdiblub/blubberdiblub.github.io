@@ -1,0 +1,8 @@
+
+# IDE stuff
+/.idea/
+
+# don't commit some image formats
+*.xcf
+*.jpg
+
