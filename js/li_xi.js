@@ -1,4 +1,4 @@
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
@@ -11,8 +11,14 @@ const tex_fuzzball = texture_loader.load('images/fuzzball.png', renderer);
 const tex_dollar = texture_loader.load('images/festisite_us_dollar_1.png', renderer);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.25, 250);
 camera.position.z = 1.5;
+
+window.addEventListener('resize', function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
 const mat_null = new THREE.MeshBasicMaterial({ visible: false });
 const mat_envelope_side = new THREE.MeshBasicMaterial( { color: 0xe0291a, side: THREE.DoubleSide } );
@@ -121,8 +127,10 @@ function animate(ms)
 
             const button = document.getElementById("flip");
             button.style.visibility = "visible";
+            button.style.opacity = "1.0";
             button.onclick = function() {
                 button.onclick = undefined;
+                button.style.opacity = "0.0";
                 button.style.visibility = "hidden";
 
                 phase_p = 1.0;
@@ -151,8 +159,10 @@ function animate(ms)
 
             const button = document.getElementById("open");
             button.style.visibility = "visible";
+            button.style.opacity = "1.0";
             button.onclick = function() {
                 button.onclick = undefined;
+                button.style.opacity = "0.0";
                 button.style.visibility = "hidden";
 
                 phase_p = 1.0;
@@ -196,8 +206,10 @@ function animate(ms)
 
             const button = document.getElementById("gift");
             button.style.visibility = "visible";
+            button.style.opacity = "1.0";
             button.onclick = function() {
                 button.onclick = undefined;
+                button.style.opacity = "0.0";
                 button.style.visibility = "hidden";
 
                 phase_p = 1.0;
@@ -239,8 +251,10 @@ function animate(ms)
 
             const button = document.getElementById("lixi");
             button.style.visibility = "visible";
+            button.style.opacity = "1.0";
             button.onclick = function() {
                 button.onclick = undefined;
+                button.style.opacity = "0.0";
                 button.style.visibility = "hidden";
 
                 phase_p = 1.0;
