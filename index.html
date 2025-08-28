@@ -1,0 +1,65 @@
+---
+title: URL to Clipboard
+tagline: Easily get words and phrases from links into your clipboard
+description: Easily get words and phrases from links into your clipboard
+layout: default
+permalink: /
+---
+
+<div class="content">
+    <p id="phraseField"></p>
+</div>
+<div class="button">
+    <button id="copyButton">Copy to Clipboard</button>
+</div>
+<div>&nbsp;</div>
+<div id="statusContainer" class="status"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const params = new URLSearchParams(window.location.search);
+        const queryValue = params.get('q');
+
+        const phraseField = document.getElementById('phraseField');
+        const copyButton = document.getElementById('copyButton');
+        const statusContainer = document.getElementById('statusContainer');
+
+        function showMessage({text, category=null, timeout=5000, fadeout=3000}) {
+            const messageNode = document.createElement('p');
+            messageNode.textContent = text;
+            if (category) {
+                messageNode.classList.add(category);
+            }
+            if (fadeout > 0) {
+                messageNode.style.transition = `opacity ${fadeout.toFixed()}ms ease ${(timeout - 100).toFixed()}ms`;
+                setTimeout(() => { messageNode.style.opacity = '0'; }, 100);
+                timeout += fadeout + 100;
+            }
+            statusContainer.insertBefore(messageNode, statusContainer.firstChild);
+            setTimeout(() => { messageNode.remove(); }, timeout);
+        }
+
+        if (queryValue) {
+            phraseField.textContent = queryValue;
+            copyButton.style.display = 'block';
+        } else {
+            phraseField.textContent = 'Add your code to the URL using the "q" parameter, e.g. ?q=YOURCODE';
+            copyButton.style.display = 'none';
+        }
+
+        copyButton.addEventListener('click', () => {
+            if (queryValue) {
+                navigator.clipboard.writeText(queryValue)
+                    .then(() => {
+                        showMessage({text: 'Copied to clipboard.', category: 'success'});
+                    })
+                    .catch(err => {
+                        console.error('Could not copy text: ', err);
+                        showMessage({text: 'Failed to copy! Check the console for details.', category: 'error', timeout: 15000});
+                    });
+            } else {
+                showMessage({text: 'No code to copy.', category: 'error', timeout: 15000});
+            }
+        });
+    });
+</script>

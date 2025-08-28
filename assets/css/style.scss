@@ -1,0 +1,22 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* Custom styles for the Clipboard Service page */
+.content {
+    font-family: monospace;
+    font-size: 3rem;
+}
+.button {
+    font-size: 1.5rem;
+}
+.status {
+    font-size: 2rem;
+}
+.success {
+    color: #28a745; /* Green for success */
+}
+.error {
+    color: #dc3545; /* Red for error */
+}
